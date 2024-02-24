@@ -7,15 +7,17 @@ import { errorMessages } from '../../common/constants/error.messages';
 export class TokenService {
   constructor(private readonly jwtService: JwtService) {}
 
-  generateTokens(payload: any): { accessToken: string; refreshToken: string } {
+  async generateTokens(
+    payload: any,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     // Generate an access token using the payload with "type: 'access'"
-    const accessToken = this.jwtService.sign(
+    const accessToken = await this.jwtService.signAsync(
       { sub: payload, type: tokenConstants.type.ACCESS },
       { expiresIn: tokenConstants.options.accessToken.expiresIn },
     );
 
     // Generate a refresh token using the payload with "type: 'refresh'" and a longer expiration time
-    const refreshToken = this.jwtService.sign(
+    const refreshToken = await this.jwtService.signAsync(
       { sub: payload, type: tokenConstants.type.REFRESH },
       { expiresIn: tokenConstants.options.refreshToken.expiresIn },
     );
@@ -23,9 +25,9 @@ export class TokenService {
     return { accessToken, refreshToken };
   }
 
-  generateAccessToken(refreshToken: string): string {
+  async generateAccessToken(refreshToken: string): Promise<string> {
     // Verify the refresh token and extract the payload
-    const payload = this.verifyToken(refreshToken);
+    const payload = await this.verifyToken(refreshToken);
 
     // Check if the token type is "refresh"
     if (payload.type !== tokenConstants.type.REFRESH) {
@@ -33,7 +35,7 @@ export class TokenService {
     }
 
     // Generate a new access token using the payload with "type: 'access'"
-    const accessToken = this.jwtService.sign(
+    const accessToken = await this.jwtService.signAsync(
       { sub: payload?.sub, type: tokenConstants.type.ACCESS },
       { expiresIn: tokenConstants.options.accessToken.expiresIn },
     );
@@ -41,10 +43,10 @@ export class TokenService {
     return accessToken;
   }
 
-  verifyToken(token: string): any {
+  async verifyToken(token: string): Promise<any> {
     // Verify and decode the JWT token
     try {
-      return this.jwtService.verify(token);
+      return await this.jwtService.verifyAsync(token);
     } catch (error) {
       // this just to customize the error so the client will hit the refresh token
       if (error.name === 'TokenExpiredError') {

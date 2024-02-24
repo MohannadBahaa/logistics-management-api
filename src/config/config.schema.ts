@@ -5,4 +5,5 @@ export const ConfigSchema = Joi.object().keys({
   PORT: Joi.number().default(3000),
   DATABASE_URL: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
+  KAFKA_BROKERS: Joi.string().required(),
 });

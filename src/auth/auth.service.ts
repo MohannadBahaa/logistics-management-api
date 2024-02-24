@@ -29,7 +29,7 @@ export class AuthService {
 
     const { password, ...cleanUserPayload } = user.toObject();
     // If password matches, generate and return access token
-    const tokens = this.tokenService.generateTokens(cleanUserPayload);
+    const tokens = await this.tokenService.generateTokens(cleanUserPayload);
 
     return { tokens };
   }
@@ -49,14 +49,16 @@ export class AuthService {
 
     const { password, ...cleanUserPayload } = newUser.toObject();
     // Generate an access token for the new user
-    const tokens = this.tokenService.generateTokens(cleanUserPayload);
+    const tokens = await this.tokenService.generateTokens(cleanUserPayload);
 
     return { tokens };
   }
 
-  refresh(refreshDto: RefreshDto) {
+  async refresh(refreshDto: RefreshDto) {
     const refreshToken = refreshDto.refresh_token;
-    const accessToken = this.tokenService.generateAccessToken(refreshToken);
+    const accessToken = await this.tokenService.generateAccessToken(
+      refreshToken,
+    );
     return { accessToken };
   }
 }

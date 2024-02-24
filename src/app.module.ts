@@ -6,8 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { AdminModule } from './admin/admin.module';
 import { ShipmentModule } from './shipment/shipment.module';
+import { Transport, ClientsModule } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -20,8 +20,22 @@ import { ShipmentModule } from './shipment/shipment.module';
     }),
     UserModule,
     AuthModule,
-    AdminModule,
     ShipmentModule,
+    ClientsModule.register([
+      {
+        name: 'HERO_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'hero',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'hero-consumer',
+          },
+        },
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],

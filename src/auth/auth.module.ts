@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from './token/token.service';
 import { UserModule } from '../user/user.module';
 import { ConfigService } from '@nestjs/config'; // Import ConfigModule and ConfigService
+import * as fs from 'fs'; // Import the file system module
 
 @Module({
   imports: [
@@ -12,6 +13,8 @@ import { ConfigService } from '@nestjs/config'; // Import ConfigModule and Confi
       global: true,
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('app.jwtSecret'), // Read JWT secret from config module
+        privateKey: fs.readFileSync('./my_ed25519_key'),
+        publicKey: fs.readFileSync('./my_ed25519_key.pub'),
       }),
       inject: [ConfigService],
     }),

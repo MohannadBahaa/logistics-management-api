@@ -4,13 +4,14 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  ValidationPipe,
   Get,
-  Param,
   Query,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegistererDto, RefreshDto, LoginDto } from './dto';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +27,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('Signup')
   async signup(@Body() registerDto: RegistererDto) {
+    // TODO: send email after signup by sending this message to kafka
     const tokens = await this.authService.signup(registerDto);
     return tokens;
   }
@@ -35,5 +37,11 @@ export class AuthController {
   refresh(@Query() refreshDto: RefreshDto) {
     const accessToken = this.authService.refresh(refreshDto);
     return accessToken;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
