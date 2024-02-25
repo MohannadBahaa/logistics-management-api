@@ -3,10 +3,8 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor() {}
   healthcheck(): string {
-    console.log(this.configService.get<number>('database'));
-    console.log(this.configService.get<number>('app'));
     return 'Working 🚀';
   }
 }

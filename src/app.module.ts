@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ShipmentModule } from './shipment/shipment.module';
-import { Transport, ClientsModule } from '@nestjs/microservices';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
   imports: [
@@ -21,21 +21,11 @@ import { Transport, ClientsModule } from '@nestjs/microservices';
     UserModule,
     AuthModule,
     ShipmentModule,
-    ClientsModule.register([
-      {
-        name: 'HERO_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: 'hero',
-            brokers: ['localhost:9092'],
-          },
-          consumer: {
-            groupId: 'hero-consumer',
-          },
-        },
-      },
-    ]),
+    KafkaModule.register({
+      clientId: 'logistics-management-client',
+      brokers: ['localhost:9092'],
+      groupId: 'logistics-management-group',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
