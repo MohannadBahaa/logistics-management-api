@@ -3,9 +3,10 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from './token/token.service';
-import { UserModule } from '../user/user.module';
+import { UserModule } from 'src/user/user.module';
 import { ConfigService } from '@nestjs/config'; // Import ConfigModule and ConfigService
 import * as fs from 'fs'; // Import the file system module
+import { AuthConsumer } from './auth.consumer';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import * as fs from 'fs'; // Import the file system module
     UserModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService],
+  providers: [AuthService, TokenService, AuthConsumer],
   exports: [TokenService],
 })
 export class AuthModule {}

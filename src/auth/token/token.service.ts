@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { tokenConstants } from '../../common/constants/token.options';
-import { errorMessages } from '../../common/constants/error.messages';
+import { tokenConstants } from 'src/common/constants/token.options';
+import { errorMessages } from 'src/common/constants/error.messages';
 
 @Injectable()
 export class TokenService {

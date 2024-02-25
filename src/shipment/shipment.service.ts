@@ -4,8 +4,8 @@ import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
 import { Model } from 'mongoose';
 import { Shipment } from './schemas/shipment.schema';
-import { KafkaService } from '../kafka/kafka.service';
-import { KafkaPayload } from '../kafka/kafka.message';
+import { KafkaService } from 'src/kafka/kafka.service';
+import { KafkaPayload } from 'src/kafka/kafka.message';
 
 @Injectable()
 export class ShipmentService {

@@ -1,14 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto, RegistererDto, RefreshDto } from './dto';
-import { UserService } from '../user/user.service';
+import { UserService } from 'src/user/user.service';
 import { TokenService } from './token/token.service';
-import { errorMessages } from '../common/constants/error.messages';
+import { errorMessages } from 'src/common/constants/error.messages';
+import { KafkaService } from 'src/kafka/kafka.service';
+import { KafkaPayload } from 'src/kafka/kafka.message';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
+    private readonly _ks: KafkaService,
   ) {}
 
   async login(loginDto: LoginDto) {
@@ -49,6 +52,18 @@ export class AuthService {
 
     const { password, ...cleanUserPayload } = newUser.toObject();
     // Generate an access token for the new user
+    const message = {
+      value: 'Message send to Kakfa Topic',
+    };
+
+    const payload: KafkaPayload = {
+      messageId: '' + new Date().valueOf(),
+      body: cleanUserPayload,
+      messageType: 'Say.Hello',
+      topicName: 'hello.topic',
+    };
+
+    await this._ks.sendMessage('hello.topic', payload);
     const tokens = await this.tokenService.generateTokens(cleanUserPayload);
 
     return { tokens };
