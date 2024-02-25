@@ -3,6 +3,7 @@ import { ShipmentService } from './shipment.service';
 import { ShipmentController } from './shipment.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Shipment, ShipmentSchema } from './schemas/shipment.schema';
+import { ShipmentConsumer } from './shipment.consumer';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { Shipment, ShipmentSchema } from './schemas/shipment.schema';
     ]),
   ],
   controllers: [ShipmentController],
-  providers: [ShipmentService],
+  providers: [ShipmentService, ShipmentConsumer],
 })
 export class ShipmentModule {}

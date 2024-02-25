@@ -4,31 +4,33 @@ import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
 import { Model } from 'mongoose';
 import { Shipment } from './schemas/shipment.schema';
+import { KafkaService } from '../kafka/kafka.service';
+import { KafkaPayload } from '../kafka/kafka.message';
 
 @Injectable()
 export class ShipmentService {
-  constructor(
-    @InjectModel(Shipment.name) private ShipmentModel: Model<Shipment>,
-  ) {}
-  async create(createShipmentDto: CreateShipmentDto) {
-    const createdShipment = new this.ShipmentModel(createShipmentDto);
-    const savedShipment = await createdShipment.save();
-    return savedShipment;
+  constructor(private readonly kafkaService: KafkaService) {}
+
+  getHello() {
+    return {
+      value: 'hello world',
+    };
   }
 
-  findAll() {
-    return `This action returns all shipment`;
-  }
+  async send() {
+    const message = {
+      value: 'Message send to Kakfa Topic',
+    };
 
-  findOne(id: number) {
-    return `This action returns a #${id} shipment`;
-  }
+    const payload: KafkaPayload = {
+      messageId: '' + new Date().valueOf(),
+      body: message,
+      messageType: 'Say.Hello',
+      topicName: 'hello.topic',
+    };
 
-  update(id: number, updateShipmentDto: UpdateShipmentDto) {
-    return `This action updates a #${id} shipment`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} shipment`;
+    const value = await this.kafkaService.sendMessage('hello.topic', payload);
+    console.log('kafka status ', value);
+    return message;
   }
 }
