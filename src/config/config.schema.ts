@@ -6,4 +6,6 @@ export const ConfigSchema = Joi.object().keys({
   DATABASE_URL: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
   KAFKA_BROKERS: Joi.string().required(),
+  KAFKA_CLIENT_ID: Joi.string().required(),
+  KAFKA_GROUP_ID: Joi.string().required(),
 });
