@@ -5,4 +5,6 @@ export const appConfig = registerAs('app', () => ({
   port: process.env.PORT,
   jwtSecret: process.env.JWT_SECRET,
   kafkaBrokers: process.env.KAFKA_BROKERS,
+  kafkaClientId: process.env.KAFKA_CLIENT_ID,
+  kafkaGroupId: process.env.KAFKA_GROUP_ID,
 }));
