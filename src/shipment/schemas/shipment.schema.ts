@@ -15,7 +15,7 @@ export interface Feedback {
   createdBy: string; // Assuming createdBy is of type string
   createdAt: Date;
 }
-
+// this schema is not finalized yet
 @Schema()
 export class Shipment extends Document {
   @Prop({ required: true })
