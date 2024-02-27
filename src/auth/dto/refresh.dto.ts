@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, isNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class RefreshDto {
   @IsNotEmpty()

@@ -21,4 +21,19 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },
+  overrides: [
+    {
+      files: [
+        '**/*.controller.ts',
+        '**/*.guard.ts',
+        '**/*.service.ts',
+        '**/*.module.ts',
+        '**/*.dto.ts',
+        '**/*.schema.ts',
+      ],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+  ],
 };

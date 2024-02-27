@@ -3,15 +3,12 @@ import { LoginDto, RegistererDto, RefreshDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token/token.service';
 import { errorMessages } from 'src/constants/error.messages';
-import { KafkaService } from 'src/common/kafka/kafka.service';
-import { KafkaPayload } from 'src/common/kafka/kafka.message';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
-    private readonly _ks: KafkaService,
   ) {}
 
   async login(loginDto: LoginDto) {

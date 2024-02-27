@@ -1,6 +1,6 @@
 // Define constant values for token types
-const ACCESS_TOKEN: 'access' = 'access';
-const REFRESH_TOKEN: 'refresh' = 'refresh';
+const ACCESS_TOKEN = 'access' as const;
+const REFRESH_TOKEN = 'refresh' as const;
 
 export interface TokenConstants {
   type: {
