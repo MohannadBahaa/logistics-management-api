@@ -6,7 +6,7 @@ import { TokenService } from './token/token.service';
 import { UserModule } from 'src/user/user.module';
 import { ConfigService } from '@nestjs/config'; // Import ConfigModule and ConfigService
 import * as fs from 'fs'; // Import the file system module
-import { AuthConsumer } from './auth.consumer';
+import { EmailModule } from 'src/common/email/email.module';
 
 @Module({
   imports: [
@@ -20,9 +20,10 @@ import { AuthConsumer } from './auth.consumer';
       inject: [ConfigService],
     }),
     UserModule,
+    EmailModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService, AuthConsumer],
+  providers: [TokenService, AuthService],
   exports: [TokenService],
 })
 export class AuthModule {}

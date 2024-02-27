@@ -7,4 +7,5 @@ export const appConfig = registerAs('app', () => ({
   kafkaBrokers: process.env.KAFKA_BROKERS,
   kafkaClientId: process.env.KAFKA_CLIENT_ID,
   kafkaGroupId: process.env.KAFKA_GROUP_ID,
+  sendgridApiKey: process.env.SENDGRID_API_KEY,
 }));

@@ -5,8 +5,8 @@ import {
   IsOptional,
   Matches,
 } from 'class-validator';
-import { errorMessages } from 'src/common/constants/error.messages';
-import { role } from 'src/common/constants/role.options';
+import { errorMessages } from 'src/constants/error.messages';
+import { role } from 'src/constants/role.options';
 
 export class CreateUserDto {
   @IsNotEmpty()

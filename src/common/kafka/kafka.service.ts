@@ -6,7 +6,7 @@ import {
   SUBSCRIBER_OBJ_REF_MAP,
 } from './kafka.decorator';
 import { KafkaConfig, KafkaPayload } from './kafka.message';
-
+import { Transport } from '@nestjs/microservices'; // Import Transport enum
 @Injectable()
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
   private kafka: Kafka;

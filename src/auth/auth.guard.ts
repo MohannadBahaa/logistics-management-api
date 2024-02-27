@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { TokenService } from './token/token.service';
-import { errorMessages } from 'src/common/constants/error.messages';
+import { errorMessages } from 'src/constants/error.messages';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

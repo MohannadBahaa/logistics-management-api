@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { Document } from 'mongoose';
+import { UserRole } from '../interfaces/user.interface';
 
 @Schema()
 export class User extends Document {
@@ -24,7 +25,7 @@ export class User extends Document {
   isActive: boolean;
 
   @Prop({ enum: ['Admin', 'User'], default: 'User' })
-  role: string;
+  role: UserRole;
 
   @Prop({ default: Date.now })
   createdAt: Date;

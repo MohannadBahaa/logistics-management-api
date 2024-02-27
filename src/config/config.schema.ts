@@ -8,4 +8,5 @@ export const ConfigSchema = Joi.object().keys({
   KAFKA_BROKERS: Joi.string().required(),
   KAFKA_CLIENT_ID: Joi.string().required(),
   KAFKA_GROUP_ID: Joi.string().required(),
+  SENDGRID_API_KEY: Joi.string().required(),
 });
